@@ -1,0 +1,25 @@
+﻿// cli.h: 标准系统包含文件的包含文件
+// 或项目特定的包含文件。
+
+#pragma once
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+// TODO: 在此处引用程序需要的其他标头。
+namespace cli {
+
+	struct CommandContext {
+		std::vector<std::string> history;
+	};
+
+	class CommandParser {
+
+	public:
+		int execute(const std::string& command);
+		std::vector<std::string> splitToArg(std::string str);
+
+		static std::string trim(std::string str);
+	};
+} // namespace cli
