@@ -10,8 +10,13 @@
 // TODO: 在此处引用程序需要的其他标头。
 namespace cli {
 
+	struct Options {
+		std::string help;
+	}
+
 	struct CommandContext {
 		std::vector<std::string> history;
+
 	};
 
 	class CommandParser {

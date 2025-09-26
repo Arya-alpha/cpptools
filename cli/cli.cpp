@@ -2,6 +2,7 @@
 //
 
 #include "cli.h"
+#include <sstream>
 
 using namespace std;
 using namespace cli;
@@ -12,8 +13,15 @@ int CommandParser::execute(const std::string& str) {
 		return 0;
 	}
 
-	//std::cout << "trim" << s;
 	std::vector<std::string> args = splitToArg(str);
+	if (args[0] == "help") {
+		std::cout << "help content" << std::endl;
+	}
+
+	// for (auto &arg : args) {
+	// 	std::cout << arg << std::endl;
+	// }
+
 	// exit
 	if (args[0] == "exit") {
 		return -999;
@@ -23,14 +31,20 @@ int CommandParser::execute(const std::string& str) {
 }
 
 std::vector<std::string> CommandParser::splitToArg(std::string str) {
-	std::vector<std::string> list;
-	return list;
+	std::vector<std::string> vectors;
+	std::stringstream ss(str);
+	std::string word;
+	while (ss >> word) {
+		vectors.push_back(word);
+	}
+
+	return vectors;
 }
 
 std::string CommandParser::trim(std::string str) {
 	auto is_space = [](unsigned char ch) {
 		return isspace(ch);
-		};
+	};
 	while (!str.empty() && is_space(str.front())) {
 		str.erase(str.begin());
 	}
@@ -45,7 +59,7 @@ int main(int argc, char** argv) {
 
 	CommandParser parser;
 	while (true) {
-		string line;
+		std::string line;
 		if (!std::getline(std::cin, line)) {
 			std::cout << "\n";
 			break;
