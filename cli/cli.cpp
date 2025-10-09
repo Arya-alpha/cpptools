@@ -14,6 +14,20 @@ int CommandParser::execute(const std::string& str) {
 	}
 
 	std::vector<std::string> args = splitToArg(str);
+	for (size_t i = 0; i < args.size(); i++) {
+		const std::string& arg = args[i];
+		std::string key = arg;
+		std::string value;
+		if (arg.rfind("--", 0) == std::string::npos) {
+			bool result = splitToKv(arg, key, value);
+			if (result) {
+				std::cout << "k=" << key << ",v=" << value;
+			}
+			else {
+
+			}
+		}
+	}
 	if (args[0] == "help") {
 		std::cout << "help content" << std::endl;
 	}
@@ -39,6 +53,16 @@ std::vector<std::string> CommandParser::splitToArg(std::string str) {
 	}
 
 	return vectors;
+}
+
+bool CommandParser::splitToKv(const std::string& str, std::string& key, std::string& value) {
+	size_t pos = str.find('=');
+	if (pos == std::string::npos) {
+		return false;
+	}
+	key = str.substr(0, pos);
+	value = str.substr(pos + 1, str.size() - 1);
+	return true;
 }
 
 std::string CommandParser::trim(std::string str) {
